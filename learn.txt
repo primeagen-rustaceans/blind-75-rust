@@ -1,0 +1,16 @@
+
+
+
+TODO: Understanding this error
+ the trait bound `(): From<Option<i32>>` is not satisfied
+  --> src/main.rs:32:58
+   |
+32 | ...ert(num[i],i as i32).try_into().unwrap()
+   |                         ^^^^^^^^ the trait `From<Option<i32>>` is not implemented for `()`
+   |
+   = note: required for `Option<i32>` to implement `Into<()>`
+   = note: required for `()` to implement `TryFrom<Option<i32>>`
+   = note: required for `Option<i32>` to implement `TryInto<()>`
+
+For more information about this error, try `rustc --explain E0277`.
+error: could not compile `blind-75-rust` due to previous error
