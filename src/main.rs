@@ -1,38 +1,43 @@
-#![allow(dead_code)]
 
-use std::collections::HashMap;
 
-fn main() {
-    let results:Vec<i32>=two_sum(vec!(1,2,3,4,5,6,7,8,9,10),10);
-    // let results:Vec<i32>=two_sum_hm(vec!(1,2,3,4,5,6,7,8,9,10),10);
-    println!("Hello, world! {:?}",results);
+fn main(){
+    println!("hello there");
+    println!("{:?}",profit(vec![7,1,2,3,40,10]));
 }
-fn two_sum(num:Vec<i32>,target:i32)->Vec<i32>{
-    let mut results:Vec<i32>=Vec::new();
-    for i in 0..num.len() {
-        for j in (i+1)..num.len() {
-            if num[i]+num[j]==target{
-                results.push(i as i32);
-                results.push(j as i32);
-            }
+
+fn profit(price: Vec<i32>) -> i32 {
+    let mut profit: i32 = 0;
+    let mut minimum: i32 = price[0];
+
+    for current_price in price.iter().skip(1) {
+        if current_price < &minimum {
+            minimum = *current_price 
+        }
+
+        if current_price - minimum > profit {
+            profit = current_price - minimum;
         }
     }
-    results
+    profit
 }
 
-// adding
-fn two_sum_hm(num:Vec<i32>,target:i32)->Vec<i32>{
-    let mut knowledge_base=HashMap::new();
-    let mut results = vec![];
-    for i in 0..num.len(){
-        match knowledge_base.get(&(&target-&num[i])){
-            Some(&index)=>{
-                results.push(index as i32);
-                results.push(i as i32);
-                break;
-            },
-            None =>knowledge_base.insert(num[i],i as i32).unwrap()
-        };
+// if want to know the day of buy and sell : 2 pointers should be used.
+fn profit_two_pointers(prices: Vec<i32>) -> i32 {
+    let mut max_profit: i32 = 0;
+    let mut left_ptr = 0;
+    let mut right_ptr = 1;
+
+    while right_ptr < prices.len() - 1 {
+        if prices[left_ptr] < prices[right_ptr] {
+            let profit = prices[right_ptr] - prices[left_ptr];
+
+            if profit > max_profit {
+                max_profit = profit;
+            }
+        } else {
+            left_ptr = right_ptr;
+        }
+        right_ptr += 1
     }
-    vec![]
+    max_profit
 }
